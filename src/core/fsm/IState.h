@@ -1,17 +1,15 @@
 #ifndef CORE_FSM_ISTATE_h
 #define CORE_FSM_ISTATE_h
 
-#include "FSMEvent.h"
-
 namespace Core {
 namespace FSM {
 
 class IState
 {
 public:
-
-  void Enter(FSMEvent event); 
-  void Exit(); 
+  // Called on entering the state from another state
+  virtual void Enter() = 0; 
+  virtual void Exit() = 0; 
 };
 
 } // namespace FSM

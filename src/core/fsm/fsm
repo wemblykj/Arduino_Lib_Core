@@ -1,0 +1,11 @@
+#ifndef CORE_FSM_FSM
+#define CORE_FSM_FSM
+
+#include "core/fsm/Event.h"
+#include "core/fsm/IState.h"
+#include "core/fsm/ITransition.h"
+#include "core/fsm/IFSM.h"
+#include "core/fsm/IUpdatableState.h"
+#include "core/fsm/ITimeoutState.h"
+
+#endif // CORE_FSM_FSM
