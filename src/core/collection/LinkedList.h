@@ -1,12 +1,13 @@
 /* Simple forward and bidirectional linked list implementations
  * Paul Wightmore 2015
  */
-#ifndef _CORE_LINKEDLIST_h
-#define _CORE_LINKEDLIST_h
+#ifndef _CORE_COLLECTION_LINKEDLIST_h
+#define _CORE_COLLECTION_LINKEDLIST_h
 
 #include <stdlib.h>
 
 namespace Core {
+namespace Colleciton {
 
 template<
     typename T_Payload, 
@@ -175,6 +176,7 @@ class ForwardLinkedList : public LinkedList<T_Payload, ForwardPolicy> {};
 template<typename T_Payload>
 class BidirectionalLinkedList : public LinkedList<T_Payload, BidirectionalPolicy> {};
 
+} // namespace Collection
 } // namespace Core
 
-#endif // _CORE_LINKEDLIST_h
+#endif // _CORE_COLLECTION_LINKEDLIST_h

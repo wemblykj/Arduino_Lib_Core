@@ -1,5 +1,5 @@
-#ifndef CORE_FSM_DEFAULT_FIXEDTIMEOUTSTATE_h
-#define CORE_FSM_DEFAULT_FIXEDTIMEOUTSTATE_h
+#ifndef _CORE_FSM_DEFAULT_FIXEDTIMEOUTSTATE_h
+#define _CORE_FSM_DEFAULT_FIXEDTIMEOUTSTATE_h
 
 #include "core/fsm/default/TimeoutState.h"
 
@@ -7,11 +7,14 @@ namespace Core {
 namespace FSM {
 namespace Default {
 
-template<int T_TimeoutPeriod>
-class FixedTimeoutState : public TimeoutState {
+template<
+  int T_TimeoutPeriod,
+  class T_StateImpl = IState
+>
+class FixedTimeoutState : public TimeoutState<T_StateImpl> {
 public:
-  void Reset() {
-    mRemaining = T_TimeoutPeriod;
+  void Reset() override {
+    TimeoutState<T_StateImpl>::mRemaining = T_TimeoutPeriod;
   }
 };
 
@@ -19,4 +22,4 @@ public:
 } // namespace FSM
 } // namespace Core
 
-#endif CORE_FSM_DEFAULT_FIXEDTIMEOUTSTATE_h
+#endif _CORE_FSM_DEFAULT_FIXEDTIMEOUTSTATE_h

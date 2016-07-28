@@ -1,5 +1,5 @@
-#ifndef CORE_FSM_DEFAULT_STATE_h
-#define CORE_FSM_DEFAULT_STATE_h
+#ifndef _CORE_FSM_DEFAULT_STATE_h
+#define _CORE_FSM_DEFAULT_STATE_h
 
 #include "core/fsm/IState.h"
 
@@ -7,7 +7,8 @@ namespace Core {
 namespace FSM {
 namespace Default {
 
-class State : public IState {
+template<class T_StateImpl = IState>
+class State : public T_StateImpl, virtual public IState {
 public:
   void Enter() override {
     OnEnter();
@@ -25,4 +26,4 @@ public:
 } // namespace FSM
 } // namespace Core
 
-#endif CORE_FSM_DEFAULT_STATE_h
+#endif _CORE_FSM_DEFAULT_STATE_h

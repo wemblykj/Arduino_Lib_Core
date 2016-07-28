@@ -1,8 +1,9 @@
-#ifndef CORE_FSM_FSM_h
-#define CORE_FSM_FSM_h
+#ifndef _CORE_FSM_DEFAULT_FSM_h
+#define _CORE_FSM_DEFAULT_FSM_h
 
 #include "core/fsm/IFSM.h"
 #include "core/fsm/ITransition.h"
+#include "core/event/IEventClassifier.h"
 
 #include <string.h>
 
@@ -18,8 +19,12 @@ class FixedSizeFSM : public IFSM<T_StateImpl> {
 
 private:
   struct TransitionEntry {
+    TransitionEntry(const Core::Event::IEventClassifier& ec) {
+      eventClassifier = ec;
+    }
+
+    const Core::Event::IEventClassifier& eventClassifier;
     T_StateImpl* fromState;
-    Event event;
     T_StateImpl* toState;
     ITransition<T_StateImpl>* transition;
   }; 
@@ -68,16 +73,22 @@ public:
     return false;
   }
 
-  bool AddTransition(T_StateImpl* fromState, Event event, T_StateImpl* toState) {
-    return AddTransition(fromState, event, toState, nullptr);
+  bool AddTransition(
+	T_StateImpl* fromState, 
+	const Core::Event::IEventClassifier& eventClassifier, 
+	T_StateImpl* toState) {
+    return AddTransition(fromState, eventClassifier, toState, nullptr);
   }
 
-  bool AddTransition(T_StateImpl* fromState, Event event, T_StateImpl* toState, ITransition<T_StateImpl>* transition) {
+  bool AddTransition(
+	T_StateImpl* fromState, 
+	const Core::Event::IEventClassifier& eventClassifier, 
+	T_StateImpl* toState, 
+	ITransition<T_StateImpl>* transition) {
     for(int i = 0; i < T_TransitionCount; ++i) {
       if (m_Transitions[i] == nullptr) {
-        auto transitionEntry = new TransitionEntry();
+        auto transitionEntry = new TransitionEntry(eventClassifier);
         transitionEntry->fromState = fromState;
-        transitionEntry->event = event;
         transitionEntry->toState = toState;
         transitionEntry->transition = transition;
 
@@ -90,12 +101,14 @@ public:
     return false;
   }
 
-  bool RemoveTransition(T_StateImpl* fromState, Event event) {
+  bool RemoveTransition(
+	T_StateImpl* fromState, 
+	const Core::Event::IEventClassifier& event) {
     for(int i = 0; i < T_TransitionCount; ++i) {
       const auto transitionEntry = m_Transitions[i];
       if (transitionEntry != nullptr) {
         if (transitionEntry->fromState == fromState
-         && transitionEntry->event == event) {
+         && transitionEntry->eventClassifier.IsMember(event)) {
           delete(transitionEntry);
           m_Transitions[i] = nullptr; 
           return true;
@@ -137,13 +150,13 @@ public:
     return result;
   }
 
-  bool Event(Event event) {
+  bool Event(Core::Event::IEvent& event) {
     for(int i = 0; i < T_TransitionCount; ++i) {
       const auto transitionEntry = m_Transitions[i];
       if (transitionEntry == nullptr)
         continue;
  
-      if (transitionEntry->event != event) 
+      if (transitionEntry->eventClassifier.IsMember(event)) 
         continue;
 
       const auto fromState = transitionEntry->fromState;
@@ -181,4 +194,4 @@ public:
 } // namespace FSM
 } // namespace Core
 
-#endif CORE_FSM_FSM_h
+#endif _CORE_FSM_DEFAULT_FSM_h

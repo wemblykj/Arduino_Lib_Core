@@ -1,23 +1,27 @@
-#ifndef CORE_FSM_TIMEOUTSTATE_h
-#define CORE_FSM_TIMEOUTSTATE_h
+#ifndef _CORE_FSM_DEFAULT_TIMEOUTSTATE_h
+#define _CORE_FSM_DEFAULT_TIMEOUTSTATE_h
 
-#include "core/fsm/IUpdatableState.h"
-#include "core/fsm/Event.h"
+#include "core/IUpdatable.h"
 
 namespace Core {
 namespace FSM {
 namespace Default {
 
-class TimeoutState : public State, public IUpdatableState {
+class IState;
+
+template<class T_StateImpl = IState>
+class TimeoutState : public State<T_StateImpl>, virtual public IUpdatable {
 protected:
   time_t mRemaining;
+
 public:
   void Enter() override {
     Reset();
-    State::Enter();    
+    State<T_StateImpl>::Enter();    
   }
   
   void Exit() override {
+    State<T_StateImpl>::Exit();
   }
 
   void Update(time_t deltaTime) override {
@@ -42,4 +46,4 @@ public:
 } // namespace FSM
 } // namespace Core
 
-#endif CORE_FSM_DEFAULT_TIMEOUTSTATE_h
+#endif _CORE_FSM_DEFAULT_TIMEOUTSTATE_h

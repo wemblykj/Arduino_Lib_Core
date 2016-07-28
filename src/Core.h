@@ -6,6 +6,7 @@
 
 #include "Arduino.h"
 
+#include "core/IUpdatable.h"
 #include "core/Types.h"
 #include "core/LinkedList.h"
 

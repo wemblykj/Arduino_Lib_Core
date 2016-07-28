@@ -1,5 +1,5 @@
-#ifndef CORE_FSM_ISTATE_h
-#define CORE_FSM_ISTATE_h
+#ifndef _CORE_FSM_ISTATE_h
+#define _CORE_FSM_ISTATE_h
 
 namespace Core {
 namespace FSM {
@@ -15,4 +15,4 @@ public:
 } // namespace FSM
 } // namespace Core
 
-#endif // CORE_FSM_ISTATE_h
+#endif // _CORE_FSM_ISTATE_h

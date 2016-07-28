@@ -1,5 +1,5 @@
-#ifndef CORE_FSM_DEFAULT_DEFAULT
-#define CORE_FSM_DEFAULT_DEFAULT
+#ifndef _CORE_FSM_DEFAULT_DEFAULT
+#define _CORE_FSM_DEFAULT_DEFAULT
 
 #include "core/fsm/default/FixedSizeFSM.h"
 #include "core/fsm/default/State.h"
@@ -7,4 +7,4 @@
 #include "core/fsm/default/FixedTimeoutState.h"
 #include "core/fsm/default/VariableTimeoutState.h"
 
-#endif // CORE_FSM_DEFAULT_DEFAULT
+#endif // _CORE_FSM_DEFAULT_DEFAULT
