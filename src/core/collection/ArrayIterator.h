@@ -1,28 +1,51 @@
 #ifndef CORE_COLLECTION_ARRAYITERATOR_h
 #define CORE_COLLECTION_ARRAYITERATOR_h
 
+#include "core/collection/IBidirectionalIterator.h"
+
 namespace Core {
 namespace Collection {
 
 template<typename T_Payload>
 class ArrayIterator : public IBidirectionalIterator<T_Payload> {
-  T_Payload mArray[];
-  int mCount;
+public:
+  class Delegate {
+  public:
+	virtual T_Payload Get(int index) const = 0;
+	virtual int Count() const = 0;
+  };
+
+private:
+
+  const Delegate* mDelegate;
   int mIndex;
   
 public:
-  ArrayIterator(T_Payload array[], int count, int start)
-    : mArray(array)
-    , mCount(count)
-    , mIndex(start) {
+
+  ArrayIterator(const Delegate* delegate, int index)
+    : mDelegate(delegate)
+    , mIndex(index) {
+  }
+
+  bool operator!= (const ArrayIterator& other) const {
+	  return mIndex != other.mIndex;
+  }
+  
+  const ArrayIterator& operator++ () {
+	  ++mIndex;
+	  return *this;
+  }
+  
+  T_Payload operator* () const {
+	  return mDelegate->Get(mIndex);
   }
   
   bool HasNext() {
-    return mIndex < mCount;
+    return mIndex < mDelegate->Count();
   }    
 
   T_Payload Next() {
-    return mArray[mIndex++]; 
+    return mDelegate->Get(mIndex++); 
   }
 
   bool HasPrevious() {
@@ -30,15 +53,15 @@ public:
   }    
 
   T_Payload Previous() {
-    return mArray[--mIndex]; 
+    return mDelegate->Get(--mIndex);
   }
 
-  int Index() {
+  int Index() const {
     return mIndex;
   }
 };
 
-} // namespace Colleciton
+} // namespace Collection
 } // namespace Core
 
-#endif CORE_COLLECTION_ARRAYITERATOR_h
+#endif // CORE_COLLECTION_ARRAYITERATOR_h

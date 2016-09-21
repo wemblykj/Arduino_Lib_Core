@@ -1,16 +1,22 @@
 #ifndef _CORE_COLLECTION_IENUMERATOR_h
 #define _CORE_COLLECTION_IENUMERATOR_h
 
-namespace Core {
-namespace Colleciton {
+#include "core/collection/IForwardIterator.h"
 
-template<typename T_Payload>
+namespace Core {
+namespace Collection {
+
+template<typename T_Payload, template <typename> class T_Iterator>
 class IEnumerable {
 public:
-  virtual IForwardIterator<T_Payload> First() = 0;
+  typedef T_Iterator<T_Payload> Iterator;
+
+  virtual Iterator First() const = 0;
+  //virtual Iterator begin() const = 0;
+  //virtual Iterator end() const = 0;
 };
 
-} // namespace Colleciton
+} // namespace Collection
 } // namespace Core 
 
 #endif // _CORE_COLLECTION_IENUMERATOR_h

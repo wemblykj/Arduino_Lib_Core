@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 namespace Core {
-namespace Colleciton {
+namespace Collection {
 
 template<
     typename T_Payload, 

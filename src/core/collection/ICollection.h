@@ -5,26 +5,26 @@
 #include "core/collection/IForwardIterator.h"
 
 namespace Core {
-namespace Colleciton {
+namespace Collection {
 
 template<
   typename T_Payload,
-  class T_Iterator = IForwardIterator
+  template <typename> class T_Iterator
 >
-class ICollection : IEnumerable<T_Payload> {
-protected:
-  typedef T_Iterator<T_Payload> Iterator;
-
+class ICollection : public IEnumerable<T_Payload, T_Iterator> {
+  
 public:
-  virtual int Count() = 0;
-  virtual int Clear() = 0;
+  typedef typename IEnumerable<T_Payload, T_Iterator>::Iterator Iterator;
+
+  virtual int Count() const = 0;
+  virtual void Clear() = 0;
   virtual Iterator Add(T_Payload payload) = 0;
-  virtual Iterator Remove(Iterator iterator) = 0;
-  virtual Iterator Find(T_Payload payload) = 0;
-  virtual bool Contains(T_Payload payload) = 0;
+  virtual Iterator Remove(const Iterator& iterator) = 0;
+  virtual Iterator Find(const T_Payload payload) const = 0;
+  virtual bool Contains(const T_Payload payload) const = 0;
 };
 
-} // namespace Colleciton
+} // namespace Collection
 } // namespace Core 
 
 #endif // _CORE_COLLECTION_ICOLLECTION_h
