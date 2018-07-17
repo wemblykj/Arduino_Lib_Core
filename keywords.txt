@@ -6,7 +6,7 @@
 # Class (KEYWORD1)
 #######################################
 
-LinkedList	    KEYWORD1
+LinkedList	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -15,12 +15,12 @@ LinkedList	    KEYWORD1
 # methods names in common
 
 # IController interface
-head	        KEYWORD2
-tail	        KEYWORD2
+head	KEYWORD2
+tail	KEYWORD2
 
 
 #######################################
 # Constants (LITERAL1)
 #######################################
 
-#Resolution          LITERAL1
+#Resolution	LITERAL1
